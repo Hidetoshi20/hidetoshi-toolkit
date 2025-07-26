@@ -3926,6 +3926,7 @@ rules:
     - 'DOMAIN-SUFFIX,upaiyun.com,DIRECT'
     - 'DOMAIN-SUFFIX,upyun.com,DIRECT'
     - 'DOMAIN-SUFFIX,veryzhun.com,DIRECT'
+    - 'DOMAIN,tkglobal.melon.com,DIRECT'
     - 'DOMAIN-SUFFIX,weather.com,DIRECT'
     - 'DOMAIN-SUFFIX,weibo.com,DIRECT'
     - 'DOMAIN-SUFFIX,xiami.com,DIRECT'
