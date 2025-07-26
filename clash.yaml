@@ -59,10 +59,12 @@ proxies:
     - { name: 英国-优化2, type: vmess, server: m.cnmjin.net, port: 16645, uuid: 8e0a1bf0-3b7a-4e78-9873-b571fd1bba42, alterId: 0, cipher: auto, udp: true, network: ws, ws-opts: { path: /, headers: { Host: 05691aa6a93110782ea2607c791f697c.mobgslb.tbcache.com } }, ws-path: /, ws-headers: { Host: 05691aa6a93110782ea2607c791f697c.mobgslb.tbcache.com } }
     - { name: 英国-优化3, type: vmess, server: t.cnmjcn.cyou, port: 16645, uuid: 8e0a1bf0-3b7a-4e78-9873-b571fd1bba42, alterId: 0, cipher: auto, udp: true, network: ws, ws-opts: { path: /, headers: { Host: 05691aa6a93110782ea2607c791f697c.mobgslb.tbcache.com } }, ws-path: /, ws-headers: { Host: 05691aa6a93110782ea2607c791f697c.mobgslb.tbcache.com } }
 proxy-groups:
-    - { name: 节点选择, type: select, proxies: [自动选择, 故障转移, 境内使用, 海外使用, '剩余流量：112.66 GB', 套餐到期：长期有效, 过滤掉6条线路, 日本-优化, 日本-优化2, 日本-优化3, 日本JP-HY2, 新加坡SG11-HY2, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港HKT-HY2, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 印度-优化, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3] }
+    - { name: 节点选择, type: select, proxies: [自动选择, 故障转移, AI服务自动切换, AI服务负载均衡, 境内使用, 海外使用, '剩余流量：112.66 GB', 套餐到期：长期有效, 过滤掉6条线路, 日本-优化, 日本-优化2, 日本-优化3, 日本JP-HY2, 新加坡SG11-HY2, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港HKT-HY2, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 印度-优化, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3] }
     - { name: 自动选择, type: url-test, proxies: [日本-优化, 日本-优化2, 日本-优化3, 日本JP-HY2, 新加坡SG11-HY2, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港HKT-HY2, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3], url: 'http://www.YouTube.com', interval: 600, tolerance: 200 }
     - { name: 故障转移, type: fallback, proxies: [日本-优化, 日本-优化2, 日本-优化3, 日本JP-HY2, 新加坡SG11-HY2, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港HKT-HY2, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3], url: 'http://www.YouTube.com', interval: 700, lazy: true }
     - { name: ChatGPT, type: select, proxies: [节点选择, 台湾-优化2-GPT, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 英国-优化-GPT] }
+    - { name: AI服务自动切换, type: url-test, proxies: [台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3], url: 'http://www.YouTube.com', interval: 300, tolerance: 150 }
+    - { name: AI服务负载均衡, type: load-balance, proxies: [台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3], url: 'http://www.YouTube.com', interval: 300, strategy: round-robin }
     - { name: 境内使用, type: select, proxies: [日本-优化, 日本-优化2, 日本-优化3, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 印度-优化, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3] }
     - { name: 海外使用, type: select, proxies: [过滤掉6条线路, 日本JP-HY2, 新加坡SG11-HY2, 香港HKT-HY2] }
     - { name: Netflix, type: select, proxies: [节点选择, 过滤掉6条线路, 日本-优化, 日本-优化2, 日本-优化3, 日本JP-HY2, 新加坡SG11-HY2, 新加坡-优化, 新加坡-优化2, 新加坡-优化3, 香港HKT-HY2, 香港-优化, 香港-优化2, 香港-优化3, 香港WAP-优化, 香港WAP-优化2, 香港WAP-优化3, 印度-优化, 台湾-优化, 台湾-优化2-GPT, 台湾-优化3, 美国LA-优化-GPT, 美国LA-优化2-GPT, 美国LA-优化3-GPT, 加拿大-优化, 加拿大-优化2, 加拿大-优化3, 德国-优化, 德国-优化2, 英国-优化-GPT, 英国-优化2, 英国-优化3] }
@@ -82,27 +84,44 @@ rules:
     - 'DOMAIN,mjcdnsub.mjurl.com,DIRECT'
     - 'DOMAIN-KEYWORD,mojie,自动选择'
     - 'GEOIP,lan,DIRECT,no-resolve'
-    - 'DOMAIN,openaiapi-site.azureedge.net,ChatGPT'
-    - 'DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net,ChatGPT'
-    - 'DOMAIN,openaicomproductionae4b.blob.core.windows.net,ChatGPT'
-    - 'DOMAIN,production-openaicom-storage.azureedge.net,ChatGPT'
-    - 'DOMAIN-SUFFIX,chatgpt.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,chat.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,oaistatic.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,openai.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,sora.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,chatgpt.livekit.cloud,ChatGPT'
-    - 'DOMAIN-SUFFIX,host.livekit.cloud,ChatGPT'
-    - 'DOMAIN-SUFFIX,turn.livekit.cloud,ChatGPT'
-    - 'DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net,ChatGPT'
-    - 'DOMAIN,o33249.ingest.sentry.io,ChatGPT'
-    - 'DOMAIN,openaicom.imgix.net,ChatGPT'
-    - 'DOMAIN,browser-intake-datadoghq.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,coze.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,ttwstatic.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,byteoversea.com,ChatGPT'
-    - 'DOMAIN-SUFFIX,byteintlapi.com,ChatGPT'
+
+    # AI服务自动切换规则
+    - 'DOMAIN-SUFFIX,openai.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,chatgpt.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,chat.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,oaistatic.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,oaiusercontent.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,sora.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,chatgpt.livekit.cloud,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,host.livekit.cloud,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,turn.livekit.cloud,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,coze.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,ttwstatic.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,byteoversea.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,byteintlapi.com,AI服务自动切换'
+    - 'DOMAIN,openaiapi-site.azureedge.net,AI服务自动切换'
+    - 'DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net,AI服务自动切换'
+    - 'DOMAIN,openaicomproductionae4b.blob.core.windows.net,AI服务自动切换'
+    - 'DOMAIN,production-openaicom-storage.azureedge.net,AI服务自动切换'
+    - 'DOMAIN,o33249.ingest.sentry.io,AI服务自动切换'
+    - 'DOMAIN,openaicom.imgix.net,AI服务自动切换'
+    - 'DOMAIN,browser-intake-datadoghq.com,AI服务自动切换'
+    # 更多AI服务规则
+    - 'DOMAIN-SUFFIX,anthropic.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,claude.ai,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,perplexity.ai,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,poe.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,quora.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,gemini.google.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,generativeai.google,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,deepmind.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,deepmind.google,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,notion.so,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,notion.site,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,midjourney.com,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,stability.ai,AI服务自动切换'
+    - 'DOMAIN-SUFFIX,runwayml.com,AI服务自动切换'
     - 'DOMAIN-SUFFIX,wa.me,WhatsApp'
     - 'DOMAIN-SUFFIX,whatsapp-plus.info,WhatsApp'
     - 'DOMAIN-SUFFIX,whatsapp-plus.me,WhatsApp'
@@ -3927,7 +3946,12 @@ rules:
     - 'DOMAIN-SUFFIX,zimuzu.tv,DIRECT'
     - 'DOMAIN-SUFFIX,zoho.com,DIRECT'
     - 'GEOIP,telegram,Telegram,no-resolve'
+    # 国内网站直连
     - 'DOMAIN-SUFFIX,CN,DIRECT'
     - 'GEOIP,CN,DIRECT,no-resolve'
     - 'GEOIP,CN,DIRECT'
-    - 'MATCH,节点选择'
+    # 国外网站走自动选择
+    - 'GEOIP,LAN,DIRECT,no-resolve'
+    - 'GEOIP,PRIVATE,DIRECT,no-resolve'
+    # 默认规则：国外网站走自动选择
+    - 'MATCH,自动选择'
