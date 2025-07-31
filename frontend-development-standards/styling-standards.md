@@ -162,35 +162,6 @@ export { ComponentName };
 
 ## 样式最佳实践
 
-### 设计系统变量
-```less
-// design-tokens.less
-// 颜色系统
-@color-primary: #1890ff;
-@color-success: #52c41a;
-@color-warning: #faad14;
-@color-error: #f5222d;
-
-// 间距系统
-@spacing-xs: 4px;
-@spacing-sm: 8px;
-@spacing-md: 16px;
-@spacing-lg: 24px;
-@spacing-xl: 32px;
-
-// 字体系统
-@font-size-xs: 12px;
-@font-size-sm: 14px;
-@font-size-md: 16px;
-@font-size-lg: 18px;
-@font-size-xl: 20px;
-
-// 圆角系统
-@border-radius-sm: 2px;
-@border-radius-md: 4px;
-@border-radius-lg: 8px;
-```
-
 ### 响应式设计
 ```less
 // breakpoints.less
@@ -209,14 +180,14 @@ export { ComponentName };
 
 // 使用示例
 .container {
-  padding: @spacing-md;
+  padding: 16px;
   
   .responsive(@screen-md, {
-    padding: @spacing-lg;
+    padding: 24px;
   });
   
   .responsive(@screen-lg, {
-    padding: @spacing-xl;
+    padding: 32px;
   });
 }
 ```
@@ -258,7 +229,6 @@ styles/
 ├── mixins.less            # 全局混入
 ├── animations.less         # 动画定义
 ├── breakpoints.less       # 响应式断点
-├── design-tokens.less     # 设计系统变量
 └── components/            # 组件样式
     ├── Button.module.less
     └── UserProfile.module.less

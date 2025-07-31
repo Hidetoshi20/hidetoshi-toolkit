@@ -216,8 +216,15 @@ export const fetchUserData = async (userId: string): Promise<UserData> => {
 
 ### 代码分割
 ```typescript
-// 使用 React.lazy 进行代码分割
-const UserProfile = React.lazy(() => import('./UserProfile').then(module => ({ default: module.UserProfile })));
+// 使用 React.lazy 进行代码分割 - 命名导出
+const UserProfile = React.lazy(() => 
+  import('./UserProfile').then(module => ({ default: module.UserProfile }))
+);
+
+// 或者使用更简洁的写法
+const UserProfile = React.lazy(() => 
+  import('./UserProfile').then(({ UserProfile }) => ({ default: UserProfile }))
+);
 
 // 在路由中使用
 <Suspense fallback={<Loading />}>
