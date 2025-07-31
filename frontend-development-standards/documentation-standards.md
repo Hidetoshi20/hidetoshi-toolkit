@@ -21,152 +21,182 @@ docs/
 ```
 
 ## 文档编写原则
+- **概念优先**：重点描述概念、流程和架构，而非具体实现
+- **图表驱动**：使用流程图、架构图、表格等可视化方式表达
+- **文字描述**：用清晰的文字描述功能、特性和使用方法
 - **面向AI**：文档主要供AI助手阅读，使用清晰的结构和标准格式
 - **完整性**：每个功能模块都应有完整的文档说明
 - **可维护性**：文档结构清晰，便于更新和维护
-- **实用性**：重点说明如何使用，而非实现细节
+
+## 文档表达方式优先级
+
+### 1. 流程图 (Mermaid)
+用于描述业务流程、数据流、组件交互等
+
+```mermaid
+graph TD
+    A[用户输入] --> B{数据验证}
+    B -->|通过| C[处理数据]
+    B -->|失败| D[显示错误]
+    C --> E[保存结果]
+    D --> A
+    E --> F[完成]
+```
+
+### 2. 架构图
+用于描述系统架构、组件关系、数据流向
+
+```mermaid
+graph LR
+    A[前端应用] --> B[API网关]
+    B --> C[用户服务]
+    B --> D[订单服务]
+    C --> E[数据库]
+    D --> E
+```
+
+### 3. 表格
+用于描述参数、配置、对比等结构化信息
+
+| 参数名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| userId | string | 是 | - | 用户唯一标识 |
+| options | object | 否 | {} | 请求选项 |
+
+### 4. 文字描述
+用于描述概念、特性、注意事项等
 
 ## 组件文档规范
-```typescript
-/**
- * 用户资料组件
- * 
- * @description 用于显示和编辑用户基本信息，支持头像上传和表单验证
- * @since 1.0.0
- * @author 开发团队
- * 
- * @example
- * ```tsx
- * import { UserProfile } from '@/components';
- * 
- * <UserProfile 
- *   user={userData} 
- *   onSave={handleSave}
- *   editable={true}
- * />
- * ```
- * 
- * @param user - 用户数据对象，包含用户的基本信息
- * @param onSave - 保存回调函数，当用户点击保存时触发
- * @param editable - 是否可编辑，默认为 true
- * @param loading - 是否显示加载状态，默认为 false
- * 
- * @returns JSX.Element 用户资料组件
- * 
- * @throws {Error} 当用户数据格式不正确时抛出错误
- */
+
+### 组件概述
+用文字描述组件的用途、特性和适用场景
+
+### 组件架构
+```mermaid
+graph TD
+    A[ComponentName] --> B[Header]
+    A --> C[Content]
+    A --> D[Footer]
+    B --> E[Title]
+    B --> F[Actions]
+    C --> G[Form]
+    C --> H[List]
 ```
+
+### 数据流
+```mermaid
+sequenceDiagram
+    participant U as 用户
+    participant C as 组件
+    participant P as 父组件
+    
+    U->>C: 触发事件
+    C->>C: 内部处理
+    C->>P: 回调通知
+    P->>C: 更新数据
+    C->>U: 界面更新
+```
+
+### 属性说明
+| 属性名 | 类型 | 默认值 | 必填 | 说明 |
+|--------|------|--------|------|------|
+| data | object | - | 是 | 组件数据 |
+| onSave | function | - | 否 | 保存回调 |
 
 ## API 文档规范
-```typescript
-/**
- * 获取用户数据
- * 
- * @description 从服务器获取指定用户的详细信息，支持缓存和错误重试
- * @since 1.0.0
- * @author API团队
- * 
- * @param userId - 用户唯一标识符，必须是有效的字符串
- * @param options - 请求选项，包含超时时间和重试次数
- * @returns Promise<UserData> 用户数据对象，包含完整的用户信息
- * @throws {Error} 当网络请求失败或用户不存在时抛出错误
- * 
- * @example
- * ```typescript
- * import { fetchUserData } from '@/api/user';
- * 
- * try {
- *   const userData = await fetchUserData('123');
- *   console.log(userData.name);
- * } catch (error) {
- *   console.error('获取用户数据失败:', error);
- * }
- * ```
- * 
- * @example
- * ```typescript
- * // 使用自定义选项
- * const userData = await fetchUserData('123', {
- *   timeout: 5000,
- *   retries: 3
- * });
- * ```
- */
+
+### API 概述
+用文字描述API的功能、用途和特点
+
+### 请求流程
+```mermaid
+graph LR
+    A[客户端] --> B[参数验证]
+    B --> C[API调用]
+    C --> D[业务处理]
+    D --> E[数据返回]
+    E --> F[响应处理]
 ```
+
+### 参数说明
+| 参数名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| userId | string | 是 | - | 用户ID |
+| options | object | 否 | {} | 请求选项 |
+
+### 响应格式
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| code | number | 响应状态码 |
+| data | object | 响应数据 |
+| message | string | 响应消息 |
 
 ## 类型文档规范
-```typescript
-/**
- * 用户数据接口
- * 
- * @description 定义用户对象的数据结构
- * @property id - 用户唯一标识
- * @property name - 用户姓名
- * @property email - 用户邮箱
- * @property avatar - 用户头像URL
- * @property status - 用户状态，可以是 'active' | 'inactive' | 'pending'
- */
-interface UserData {
-  /** 用户唯一标识符 */
-  id: string;
-  /** 用户姓名，必填项 */
-  name: string;
-  /** 用户邮箱地址，必须符合邮箱格式 */
-  email: string;
-  /** 用户头像URL，可选 */
-  avatar?: string;
-  /** 用户状态，默认为 'active' */
-  status: UserStatus;
-}
+
+### 类型概述
+用文字描述类型的作用、特点和约束
+
+### 类型关系图
+```mermaid
+graph TD
+    A[BaseType] --> B[UserType]
+    A --> C[OrderType]
+    B --> D[UserProfile]
+    B --> E[UserSettings]
+    C --> F[OrderItem]
+    C --> G[OrderStatus]
 ```
+
+### 类型说明
+| 类型名 | 用途 | 特点 | 约束 |
+|--------|------|------|------|
+| UserData | 用户数据 | 包含基本信息 | 必填字段验证 |
+| OrderData | 订单数据 | 包含商品信息 | 状态流转验证 |
 
 ## 工具函数文档规范
-```typescript
-/**
- * 格式化日期为指定格式
- * 
- * @description 将Date对象格式化为可读的字符串，支持多种格式
- * @since 1.0.0
- * 
- * @param date - 要格式化的日期对象
- * @param format - 输出格式，默认为 'YYYY-MM-DD'
- * @returns 格式化后的日期字符串，如果输入无效则返回空字符串
- * 
- * @example
- * ```typescript
- * import { formatDate } from '@/utils/date';
- * 
- * const date = new Date('2023-01-01');
- * formatDate(date); // '2023-01-01'
- * formatDate(date, 'YYYY/MM/DD'); // '2023/01/01'
- * ```
- */
+
+### 函数概述
+用文字描述函数的功能、输入输出和特点
+
+### 处理流程
+```mermaid
+graph TD
+    A[输入数据] --> B[参数验证]
+    B --> C[数据处理]
+    C --> D[结果格式化]
+    D --> E[返回结果]
 ```
 
+### 参数说明
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| input | any | 是 | 输入数据 |
+| options | object | 否 | 处理选项 |
+
 ## Hook 文档规范
-```typescript
-/**
- * 用户数据管理Hook
- * 
- * @description 提供用户数据的获取、更新和缓存功能
- * @since 1.0.0
- * 
- * @param userId - 用户ID，用于获取指定用户的数据
- * @returns 包含用户数据、加载状态和操作方法的对象
- * 
- * @example
- * ```typescript
- * import { useUser } from '@/hooks/useUser';
- * 
- * const { user, loading, updateUser, refreshUser } = useUser('123');
- * 
- * if (loading) return <Loading />;
- * if (!user) return <NotFound />;
- * 
- * return <UserProfile user={user} onUpdate={updateUser} />;
- * ```
- */
+
+### Hook 概述
+用文字描述Hook的功能、状态管理和返回值
+
+### 状态管理图
+```mermaid
+stateDiagram-v2
+    [*] --> 初始化
+    初始化 --> 加载中
+    加载中 --> 成功
+    加载中 --> 失败
+    成功 --> 更新中
+    更新中 --> 成功
+    失败 --> 重试
+    重试 --> 加载中
 ```
+
+### 返回值说明
+| 属性名 | 类型 | 说明 |
+|--------|------|------|
+| data | object | 数据对象 |
+| loading | boolean | 加载状态 |
+| error | string | 错误信息 |
 
 ## Markdown 文档编写规范
 
@@ -181,22 +211,14 @@ interface UserData {
 - 特性1：详细说明
 - 特性2：详细说明
 
-## 使用方法
-### 基本用法
-```typescript
-// 代码示例
-```
+## 架构设计
+[使用Mermaid图表描述架构]
 
-### 高级用法
-```typescript
-// 高级代码示例
-```
+## 使用流程
+[使用流程图描述使用步骤]
 
-## API 参考
-### 参数说明
-| 参数 | 类型 | 必填 | 默认值 | 说明 |
-|------|------|------|--------|------|
-| param1 | string | 是 | - | 参数说明 |
+## 配置说明
+[使用表格描述配置项]
 
 ## 注意事项
 - 重要提醒1
@@ -208,13 +230,12 @@ interface UserData {
 ```
 
 ### 文档编写要求
+- **图表优先**：优先使用Mermaid图表描述流程和架构
+- **表格清晰**：使用表格描述参数、配置等结构化信息
+- **文字简洁**：用简洁明了的文字描述概念和特性
+- **避免代码**：除非必要，避免在文档中展示具体代码实现
 - **标题层级**：使用标准的Markdown标题层级（#, ##, ###）
-- **代码块**：使用语法高亮，标明语言类型
-- **表格**：使用标准Markdown表格格式
-- **链接**：使用相对路径或绝对路径
-- **图片**：提供alt文本，使用相对路径
-- **列表**：使用有序列表和无序列表
-- **强调**：使用**粗体**和*斜体*进行强调
+- **链接有效**：使用相对路径或绝对路径，确保链接有效
 
 ### 文档更新规范
 - 每次功能更新时同步更新相关文档
@@ -228,16 +249,16 @@ interface UserData {
 - [ ] 文档标题清晰明确
 - [ ] 概述部分说明了文档目的
 - [ ] 功能特性完整列出
-- [ ] 使用示例覆盖主要场景
-- [ ] API 参数说明详细
+- [ ] 使用流程图清晰描述
+- [ ] 参数说明详细
 - [ ] 注意事项和限制条件明确
 
-### 格式规范性
-- [ ] 标题层级使用正确
-- [ ] 代码块有语言标识
-- [ ] 表格格式规范
-- [ ] 链接地址有效
-- [ ] 图片有 alt 文本
+### 表达方式
+- [ ] 优先使用图表而非代码
+- [ ] 表格格式规范清晰
+- [ ] 文字描述简洁明了
+- [ ] 架构图完整准确
+- [ ] 流程图逻辑清晰
 
 ### 可维护性
 - [ ] 文档结构清晰
@@ -258,14 +279,24 @@ ComponentName 是一个用于...的 React 组件。
 - 特性1：支持...
 - 特性2：提供...
 
-## 基本用法
-```tsx
-import { ComponentName } from '@/components';
+## 组件架构
+```mermaid
+graph TD
+    A[ComponentName] --> B[Header]
+    A --> C[Content]
+    A --> D[Footer]
+```
 
-<ComponentName 
-  prop1="value1"
-  prop2="value2"
-/>
+## 数据流
+```mermaid
+sequenceDiagram
+    participant U as 用户
+    participant C as 组件
+    participant P as 父组件
+    
+    U->>C: 触发事件
+    C->>P: 回调通知
+    P->>C: 更新数据
 ```
 
 ## API 参考
@@ -297,10 +328,13 @@ import { ComponentName } from '@/components';
 ## 概述
 API 的功能描述和用途说明。
 
-## 请求格式
-```typescript
-// 请求示例
-const response = await apiName(params);
+## 请求流程
+```mermaid
+graph LR
+    A[客户端] --> B[参数验证]
+    B --> C[API调用]
+    C --> D[业务处理]
+    D --> E[数据返回]
 ```
 
 ## 参数说明
@@ -309,24 +343,17 @@ const response = await apiName(params);
 | param1 | string | 是 | - | 参数说明 |
 
 ## 响应格式
-```typescript
-interface Response {
-  code: number;
-  data: DataType;
-  message: string;
-}
-```
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| code | number | 响应状态码 |
+| data | object | 响应数据 |
+| message | string | 响应消息 |
 
 ## 错误码
 | 错误码 | 说明 | 解决方案 |
 |--------|------|----------|
 | 400 | 参数错误 | 检查参数格式 |
 | 500 | 服务器错误 | 联系技术支持 |
-
-## 使用示例
-```typescript
-// 示例代码
-```
 
 ## 注意事项
 - 注意事项1
