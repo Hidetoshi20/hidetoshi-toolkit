@@ -5,28 +5,29 @@
 ### 按功能模块组织
 ```
 docs/
-├── README.md                   # 项目文档索引
-├── getting-started.md          # 快速开始指南
-├── architecture.md             # 整体架构设计
-├── auth/                       # 认证功能模块
-│   ├── README.md              # 认证模块概述
-│   ├── requirements.md         # 认证需求文档
-│   ├── api.md                 # 认证API文档
-│   ├── components.md           # 认证组件文档
-├── user/                       # 用户功能模块
-│   ├── README.md              # 用户模块概述
-│   ├── requirements.md         # 用户需求文档
-│   ├── api.md                 # 用户API文档
-│   ├── components.md           # 用户组件文档
-├── order/                      # 订单功能模块
-│   ├── README.md              # 订单模块概述
-│   ├── requirements.md         # 订单需求文档
-│   ├── api.md                 # 订单API文档
-│   ├── components.md           # 订单组件文档
-└── shared/                     # 共享资源
-    ├── design-system.md        # 设计系统
-    ├── testing-guide.md        # 测试指南
-    └── deployment-guide.md     # 部署指南
+├── README.md                   # [项目] 文档入口，介绍项目并索引所有关键文档
+├── project-requirements.md     # [项目] 定义整个项目的业务需求、目标和范围
+├── getting-started.md          # [项目] 新成员的快速上手指南，包括环境搭建和启动
+├── architecture.md             # [项目] 宏观架构设计，包括技术选型和系统分层
+├── auth/                       # [模块] 认证功能
+│   ├── README.md              # [模块] 认证模块的概述、功能范围和技术栈
+│   ├── requirements.md         # [模块] 认证模块的详细用户故事、流程和验收标准
+│   ├── api.md                 # [模块] 认证模块对外暴露的API接口文档
+│   ├── components.md           # [模块] 认证模块包含的所有UI组件的说明
+├── user/                       # [模块] 用户功能
+│   ├── README.md              # [模块] 用户模块的概述、功能范围和技术栈
+│   ├── requirements.md         # [模块] 用户模块的详细用户故事、流程和验收标准
+│   ├── api.md                 # [模块] 用户模块对外暴露的API接口文档
+│   ├── components.md           # [模块] 用户模块包含的所有UI组件的说明
+├── order/                      # [模块] 订单功能
+│   ├── README.md              # [模块] 订单模块的概述、功能范围和技术栈
+│   ├── requirements.md         # [模块] 订单模块的详细用户故事、流程和验收标准
+│   ├── api.md                 # [模块] 订单模块对外暴露的API接口文档
+│   ├── components.md           # [模块] 订单模块包含的所有UI组件的说明
+└── shared/                     # [共享] 跨模块共享的资源
+    ├── design-system.md        # [共享] UI设计规范，包括颜色、字体、组件库
+    ├── testing-guide.md        # [共享] 项目的测试策略、规范和工具介绍
+    └── deployment-guide.md     # [共享] 项目的构建、部署和发布流程指南
 ```
 
 ## 文档编写原则
