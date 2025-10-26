@@ -23,6 +23,10 @@
 - **监控/报警**：<要关注的指标、日志>
 - **灰度/回滚**：<feature flag、开关、回滚策略>
 
+## Design Doc Sync
+- **状态**：<已更新 design.md#章节 / 无需更新（理由）>
+- **链接**：<design.md / architecture.md 摘要或 PR 中的变更部分>
+
 ## Links
 - spec / bug report：<链接>
 - tasks.md / design doc：<链接>
