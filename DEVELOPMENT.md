@@ -172,7 +172,7 @@ git push origin v1.0.0
 
 ### 仓库组织
 ```
-hidetoshi-scripts/
+hidetoshi-toolkit/
 ├── README.md                 # 仓库概述和快速开始
 ├── docs/                     # 详细文档目录
 │   ├── development.md       # 开发规范与操作（本文档）

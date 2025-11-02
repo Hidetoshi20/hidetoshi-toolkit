@@ -22,7 +22,7 @@
 ## 目录结构
 
 ```
-hidetoshi-scripts/
+hidetoshi-toolkit/
 ├── README.md                 # 本文件 - 仓库概述
 ├── DEVELOPMENT.md            # 开发规范与操作指南
 ├── docs/                     # 详细文档
