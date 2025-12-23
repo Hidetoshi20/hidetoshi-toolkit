@@ -64,8 +64,8 @@ git config --global http.receivepack true
 
 1.  **创建 `fcgiwrap` 服务文件**:
     复制 `config_templates/homebrew.mxcl.fcgiwrap.plist.template` 文件，重命名为 `homebrew.mxcl.fcgiwrap.plist`，并修改其中的日志路径占位符：
-    -   `<string>/path/to/your/logs/fcgiwrap.out.log</string>`
-    -   `<string>/path/to/your/logs/fcgiwrap.err.log</string>`
+    -   `<string>/Users/hidetoshidekisugi/Library/Logs/fcgiwrap/fcgiwrap.out.log</string>`
+    -   `<string>/Users/hidetoshidekisugi/Library/Logs/fcgiwrap/fcgiwrap.err.log</string>`
     
     完成后，将此文件移动到 `~/Library/LaunchAgents/` 目录下。
 
@@ -116,3 +116,14 @@ git clone http://<你的IP地址>:8888/git/your-repo-name.git/
 -   **Nginx 配置中的 Git 路径**: Nginx 配置文件中的 `SCRIPT_FILENAME` 路径与你安装的 Git 版本绑定。如果你通过 `brew upgrade git` 升级了 Git，**必须手动更新这个路径**，然后重启 Nginx (`brew services restart nginx`)。
 
 -   **Dubious Ownership 错误**: Git 的一项安全特性。当执行 Git 的用户和仓库文件的所有者不同时触发。Nginx 配置通过 `fastcgi_param` 注入 `safe.directory` 环境变量解决了此问题，无需修改全局 Git 配置。
+
+---
+
+### **常见问题与排查**
+
+- **502 / 连接失败 (开了全局代理)**: 若环境设置了 `http_proxy` / `https_proxy` 指向本地代理（例如 `127.0.0.1:7897`），访问 `http://localhost:8888/git/...` 会被代理拦截导致 502。解决：对本地地址关闭代理，如 `NO_PROXY=localhost,127.0.0.1 git fetch/push`，或在 shell 环境中永久导出 `NO_PROXY=localhost,127.0.0.1`。
+- **fcgiwrap 未启动**: 若日志提示无法连接 `fastcgi://unix:/opt/homebrew/var/run/fcgiwrap.sock`，手动启动一次可快速恢复：
+  ```bash
+  nohup /bin/sh -c 'rm -f /opt/homebrew/var/run/fcgiwrap.sock && /opt/homebrew/sbin/fcgiwrap -s unix:/opt/homebrew/var/run/fcgiwrap.sock' >/path/to/fcgiwrap.out.log 2>/path/to/fcgiwrap.err.log &
+  ```
+  然后重启或启动 Nginx：`nginx -c /opt/homebrew/etc/nginx/nginx.conf`

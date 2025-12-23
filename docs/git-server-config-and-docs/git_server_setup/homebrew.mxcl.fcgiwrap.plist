@@ -8,15 +8,15 @@
     <array>
         <string>/bin/sh</string>
         <string>-c</string>
-        <string>rm -f /opt/homebrew/var/run/fcgiwrap.sock &amp;&amp; /opt/homebrew/sbin/fcgiwrap -s unix:/opt/homebrew/var/run/fcgiwrap.sock</string>
+        <string>rm -f /opt/homebrew/var/run/fcgiwrap.sock &amp;&amp; exec /opt/homebrew/sbin/fcgiwrap -s unix:/opt/homebrew/var/run/fcgiwrap.sock</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/Users/hidetoshidekisugi/Documents/suneo-git-repos/git_server_setup/fcgiwrap.out.log</string>
+    <string>/Users/hidetoshidekisugi/Library/Logs/fcgiwrap/fcgiwrap.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/hidetoshidekisugi/Documents/suneo-git-repos/git_server_setup/fcgiwrap.err.log</string>
+    <string>/Users/hidetoshidekisugi/Library/Logs/fcgiwrap/fcgiwrap.err.log</string>
 </dict>
 </plist>
