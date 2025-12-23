@@ -46,8 +46,8 @@ brew install nginx fcgiwrap
     # 创建 Nginx 的 servers 目录 (如果不存在)
     mkdir -p /opt/homebrew/etc/nginx/servers
 
-    # 创建链接 (请使用 nginx_git_server.conf 的绝对路径)
-    ln -s /path/to/your/nginx_git_server.conf /opt/homebrew/etc/nginx/servers/git.conf
+    # 复制配置文件 (使用 cp 而不是 ln -s，确保配置独立于代码仓库)
+    cp nginx_git_server.conf /opt/homebrew/etc/nginx/servers/git.conf
     ```
 
 #### **第 3 步：允许 `git push`**
