@@ -47,6 +47,27 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # fzf (Fuzzy finder)
+if command -v rg >/dev/null 2>&1; then
+  [ -z "${FZF_DEFAULT_COMMAND:-}" ] && export FZF_DEFAULT_COMMAND='rg --files --no-messages'
+  export FZF_CTRL_T_COMMAND="${FZF_CTRL_T_COMMAND:-$FZF_DEFAULT_COMMAND}"
+fi
+
+[ -z "${FZF_CTRL_T_OPTS:-}" ] && export FZF_CTRL_T_OPTS="--preview '([[ -f {} ]] && (sed -n \"1,200p\" {})) 2>/dev/null' --preview-window 'right,60%,border-left'"
+[ -z "${FZF_ALT_C_OPTS:-}" ] && export FZF_ALT_C_OPTS="--preview 'ls -la -- {} | sed -n \"1,200p\"' --preview-window 'right,60%,border-left'"
+
+# Interactive ripgrep -> fzf (search in file contents)
+rgi() {
+  local initial_query="${1:-}"
+  local rg_prefix='rg --column --line-number --no-heading --color=always --no-messages'
+  local editor="${VISUAL:-${EDITOR:-vim}}"
+
+  fzf --ansi --disabled --query "$initial_query" \
+    --bind "change:reload:$rg_prefix {q} || true" \
+    --delimiter : \
+    --preview 'sh -c '"'"'nl -ba -- "$1" | sed -n "$(( $2-3 < 1 ? 1 : $2-3 )), $(( $2+3 ))p"'"'"' sh {1} {2}' \
+    --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+    --bind "enter:become($editor +{2} {1})"
+}
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Aliases

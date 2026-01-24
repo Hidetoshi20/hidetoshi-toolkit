@@ -1,0 +1,5 @@
+--smart-case
+--hidden
+
+# Avoid scanning VCS metadata when using --hidden
+--glob=!**/.git/*

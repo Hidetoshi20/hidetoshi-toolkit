@@ -12,6 +12,7 @@ dotfiles/
 │   └── vscode-settings.json
 ├── dot_config/               # ~/.config/
 │   ├── opencode/             # OpenCode configuration
+│   ├── ripgrep/              # ripgrep configuration
 │   └── Code/                 # VSCode (Linux)
 ├── Library/                  # ~/Library/ (macOS)
 │   └── Application Support/
@@ -83,3 +84,19 @@ VSCode settings are managed via a shared template.
 - Targets: Mapped to correct paths on Windows, macOS, and Linux automatically.
 
 To update VSCode settings, edit `dotfiles/.shared/vscode-settings.json.tmpl` and run `chezmoi --source ./dotfiles apply -v`.
+
+## Ripgrep 配置
+
+建议用 Chezmoi 管理 `~/.config/ripgrep/ripgreprc`，用于统一 `rg` 的默认参数。
+
+- Source: `dotfiles/dot_config/ripgrep/ripgreprc`
+- Target: `~/.config/ripgrep/ripgreprc`
+- 启用方式（二选一）：
+  - 设置环境变量：`export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"`
+  - 或创建软链：`ln -sf "$HOME/.config/ripgrep/ripgreprc" "$HOME/.ripgreprc"`
+
+## fzf 配置
+
+`~/.zshrc` 里包含一套 fzf 默认配置（使用 `rg --files` 作为文件列表来源），并提供 `rgi`（ripgrep -> fzf 交互式内容搜索）。
+
+- Source: `dotfiles/dot_zshrc.tmpl`
