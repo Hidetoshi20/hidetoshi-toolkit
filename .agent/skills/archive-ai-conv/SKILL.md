@@ -17,21 +17,28 @@ Determine where the conversation files should be stored. If the directory doesn'
 ### 2. Determine Numbering
 Identify the starting number for the new files. Usually, this is 1 or the next available number in the sequence within the target directory.
 
-### 3. Batch Create Files
+### 3. Convert Grok JSON to Conversation (Optional)
+If you have Grok conversation logs in JSON format, you can automatically convert them into the `X-0q.md`/`X-1a.md` format.
+
+```bash
+node scripts/grok_json_to_conv.cjs <directory_path> <start_number> <json_file1> [json_file2] ...
+```
+
+### 4. Batch Create Files
 Use the provided script to create empty placeholder files for the conversations.
 
 ```bash
 node scripts/batch_create.cjs <directory_path> <start_number> <count>
 ```
 
-### 4. Merge Conversations
+### 5. Merge Conversations
 Combine all separate conversation files in a directory into a single readable Markdown file (e.g., `README.md`).
 
 ```bash
 node scripts/merge_conv.cjs <directory_path> [output_filename]
 ```
 
-### 5. Cleanup Conversations
+### 6. Cleanup Conversations
 Delete the original conversation files after they have been merged.
 
 ```bash
@@ -39,6 +46,10 @@ node scripts/cleanup_conv.cjs <directory_path>
 ```
 
 ## Examples
+
+### Convert Grok JSON Logs
+To import a chat history from `grok_chat.json` into `thoughts/MyTopic/` starting at number 1:
+`node scripts/grok_json_to_conv.cjs thoughts/MyTopic/ 1 grok_chat.json`
 
 ### Batch Creating New Files
 If a user asks to "create 10 pairs of archive files starting from 5 in the thoughts folder":
@@ -57,6 +68,10 @@ If a user wants to archive the current conversation:
 3. Save the AI's response to `X-1a.md`.
 
 ## Resources
+
+### scripts/grok_json_to_conv.cjs
+A Node.js script to parse Grok JSON chat logs and generate numbered conversation files.
+- **Arguments**: `<directory> <start_number> <json_file>...`
 
 ### scripts/batch_create.cjs
 A Node.js script to create multiple pairs of conversation files at once.
