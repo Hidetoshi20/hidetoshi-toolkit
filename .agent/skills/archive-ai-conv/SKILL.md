@@ -31,6 +31,13 @@ Combine all separate conversation files in a directory into a single readable Ma
 node scripts/merge_conv.cjs <directory_path> [output_filename]
 ```
 
+### 5. Cleanup Conversations
+Delete the original conversation files after they have been merged.
+
+```bash
+node scripts/cleanup_conv.cjs <directory_path>
+```
+
 ## Examples
 
 ### Batch Creating New Files
@@ -38,11 +45,10 @@ If a user asks to "create 10 pairs of archive files starting from 5 in the thoug
 1. Check the path: `thoughts/`
 2. Run script: `node scripts/batch_create.cjs thoughts/ 5 10`
 
-### Merging Conversations
-If a user finds the "one file per message" format hard to read:
-1. Identify the folder: `thoughts/European-History/`
-2. Run script: `node scripts/merge_conv.cjs thoughts/European-History/ README.md`
-3. This creates a `README.md` containing all questions and answers in order.
+### Merging and Cleaning Up
+If a user wants to merge files and delete the originals:
+1. Merge: `node scripts/merge_conv.cjs thoughts/History/ README.md`
+2. Cleanup: `node scripts/cleanup_conv.cjs thoughts/History/`
 
 ### Archiving a Conversation
 If a user wants to archive the current conversation:
@@ -60,3 +66,7 @@ A Node.js script to create multiple pairs of conversation files at once.
 A Node.js script to merge numbered conversation files into a single Markdown file.
 - **Arguments**: `<directory> [output_filename]`
 - **Default Output**: `README.md`
+
+### scripts/cleanup_conv.cjs
+A Node.js script to delete numbered conversation files from a directory.
+- **Arguments**: `<directory>`

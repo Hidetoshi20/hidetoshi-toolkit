@@ -23,8 +23,8 @@ try {
 
   // Identify pairs
   files.forEach(file => {
-    const qMatch = file.match(/^(\d+)-0q\.md$/);
-    const aMatch = file.match(/^(\d+)-1a\.md$/);
+    const qMatch = file.match(/^(\d+)-(?:0)?q\.md$/);
+    const aMatch = file.match(/^(\d+)-(?:1)?a\.md$/);
 
     if (qMatch) {
       const id = parseInt(qMatch[1], 10);
