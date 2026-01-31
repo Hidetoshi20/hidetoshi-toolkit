@@ -24,12 +24,25 @@ Use the provided script to create empty placeholder files for the conversations.
 node scripts/batch_create.cjs <directory_path> <start_number> <count>
 ```
 
+### 4. Merge Conversations
+Combine all separate conversation files in a directory into a single readable Markdown file (e.g., `README.md`).
+
+```bash
+node scripts/merge_conv.cjs <directory_path> [output_filename]
+```
+
 ## Examples
 
 ### Batch Creating New Files
 If a user asks to "create 10 pairs of archive files starting from 5 in the thoughts folder":
 1. Check the path: `thoughts/`
 2. Run script: `node scripts/batch_create.cjs thoughts/ 5 10`
+
+### Merging Conversations
+If a user finds the "one file per message" format hard to read:
+1. Identify the folder: `thoughts/European-History/`
+2. Run script: `node scripts/merge_conv.cjs thoughts/European-History/ README.md`
+3. This creates a `README.md` containing all questions and answers in order.
 
 ### Archiving a Conversation
 If a user wants to archive the current conversation:
@@ -42,3 +55,8 @@ If a user wants to archive the current conversation:
 ### scripts/batch_create.cjs
 A Node.js script to create multiple pairs of conversation files at once.
 - **Arguments**: `<directory> <start_number> <count>`
+
+### scripts/merge_conv.cjs
+A Node.js script to merge numbered conversation files into a single Markdown file.
+- **Arguments**: `<directory> [output_filename]`
+- **Default Output**: `README.md`
