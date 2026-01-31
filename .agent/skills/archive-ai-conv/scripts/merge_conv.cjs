@@ -46,10 +46,22 @@ try {
   }
 
   // Helper to demote headers in content so they fit under the main structure
-  const demoteHeaders = (text, levels = 2) => {
-    // Matches lines starting with 1 or more #, capturing the #s
+  const demoteHeaders = (text) => {
+    const headers = text.match(/^#+\s/gm);
+    if (!headers) return text;
+    
+    // Calculate the minimum header level found in the text
+    const minLevel = Math.min(...headers.map(h => h.trim().length));
+    
+    // We want the resulting headers to start at least at level 3 (###)
+    // because they are nested under "## Question" or "## Answer"
+    const targetLevel = 3;
+    const shift = Math.max(0, targetLevel - minLevel);
+    
+    if (shift === 0) return text;
+
     return text.replace(/^#+/gm, (match) => {
-      return '#'.repeat(match.length + levels);
+      return '#'.repeat(match.length + shift);
     });
   };
 
