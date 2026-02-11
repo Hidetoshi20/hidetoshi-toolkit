@@ -22,54 +22,61 @@ sudo mv mihomo-linux-arm64-v1.18.1 /usr/local/bin/mihomo
 
 ### 2. 安装 mihoro (CLI 管理工具)
 ```bash
-# 下载 mihoro (Rust 编写)
-# 建议从 https://github.com/a-wing/mihoro/releases 下载二进制
-wget https://github.com/a-wing/mihoro/releases/download/v0.3.1/mihoro-aarch64-unknown-linux-musl.tar.gz
-tar -xvf mihoro-aarch64-unknown-linux-musl.tar.gz
-sudo mv mihoro /usr/local/bin/mihoro
+# 使用官方安装脚本
+curl -fsSL https://raw.githubusercontent.com/spencerwooo/mihoro/main/install.sh | sh
+
+# 默认安装在 ~/.local/bin/mihoro
+# 建议将其加入 PATH 或移动到 ~/bin
+mv ~/.local/bin/mihoro ~/bin/mihoro
 ```
 
 ### 3. 初始化与订阅配置
-创建配置文件 `~/.config/mihoro.toml`：
+由于原始订阅通常是 base64 格式的 VMess 列表，而 `mihoro` 需要 Clash YAML 格式，必须使用 **Subconverter** 进行转换。
+
+编辑 `~/.config/mihoro.toml`：
 ```toml
-[mihomo]
-# 你的订阅链接
-remote_config_url = "YOUR_SUBSCRIPTION_URL"
-# 自动更新间隔 (小时)
+# 转换后的 Clash 订阅链接 (示例使用 api.v1.mk)
+remote_config_url = 'https://api.v1.mk/sub?target=clash&url=你的编码后订阅链接'
+mihomo_channel = 'stable'
+mihomo_binary_path = '/home/hidetoshi/bin/mihomo'
+mihomo_config_root = '/home/hidetoshi/.config/mihomo'
+user_systemd_root = '/home/hidetoshi/.config/systemd/user'
+mihoro_user_agent = 'mihoro'
 auto_update_interval = 12
 
-[mihoro]
-# 启用 TUN 模式 (需要 sudo)
-tun = true
+[mihomo_config]
+# 代理端口配置
+mixed_port = 7890
+external_controller = '0.0.0.0:9090'
+# 建议开启 TUN 模式以实现透明代理
+# [mihoro]
+# tun = true
 ```
 
-运行初始化并启动：
+运行应用并启动：
 ```bash
-# 导入订阅并生成配置
-mihoro setup
+# 更新订阅并生成配置
+mihoro update
 
-# 启动服务 (由 mihoro 管理 systemd)
-sudo mihoro start
+# 管理服务 (User Level)
+systemctl --user start mihomo
+systemctl --user restart mihomo
+systemctl --user status mihomo
 ```
 
-### 4. 节点切换
-```bash
-# 查看当前节点
-mihoro proxy select
-
-# 切换节点
-mihoro proxy select "香港 01"
-```
+### 4. 节点切换与管理
+- **Web Dashboard**: 访问 `http://192.168.64.2:9090/ui`。
+- **命令行查看日志**: `journalctl --user -u mihomo -f`。
 
 ---
 
 ## 🔍 验证代理状态
 ```bash
-# 检查外网 IP
-curl -L google.com
+# 验证 HTTP 代理
+curl -x http://127.0.0.1:7890 -I https://www.google.com
 
-# 检查服务状态
-sudo mihoro status
+# 如果开启了 TUN，可直接验证
+curl -I https://www.google.com
 ```
 
 ---

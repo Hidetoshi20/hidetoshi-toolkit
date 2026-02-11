@@ -2,6 +2,14 @@
 
 这里记录了 OpenClaw 开发与运行所需的虚拟机环境配置、网络架构及代理策略。
 
+## 🛰 当前环境概览 (Current Status)
+
+- **VM IP**: `192.168.64.2` (Shared Network)
+- **SSH Alias**: `ssh vm` (已在 Mac `~/.ssh/config` 配置)
+- **Proxy Core**: `mihomo` (运行在 `~/bin/mihomo`)
+- **Proxy Manager**: `mihoro` (配置位于 `~/.config/mihoro.toml`)
+- **OpenClaw Gateway**: 运行在 `18789` 端口，由 systemd 托管。
+
 ## 📑 文档索引
 
 1.  **[环境基础 (VM Environment)](./env-setup.md)**
