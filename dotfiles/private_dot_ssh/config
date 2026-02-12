@@ -27,3 +27,10 @@ Host gitee-work
     User git
     IdentityFile ~/.ssh/id_work
     IdentitiesOnly yes
+
+# ====================================
+# Local Machines
+# ====================================
+Host hidetoshis-mac-mini
+    HostName localhost
+    User hidetoshidekisugi
