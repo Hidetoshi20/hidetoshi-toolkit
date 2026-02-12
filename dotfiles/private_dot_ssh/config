@@ -1,23 +1,29 @@
-Host github
+# ====================================
+# Personal Identity (Default)
+# ====================================
+Host github.com
     HostName github.com
     User git
-    IdentityFile ~/.ssh/id_rsa_github_personal
+    IdentityFile ~/.ssh/id_personal
     IdentitiesOnly yes
 
-Host gitee
+Host gitee.com
     HostName gitee.com
     User git
-    IdentityFile ~/.ssh/id_rsa_gitee_personal
+    IdentityFile ~/.ssh/id_personal
     IdentitiesOnly yes
 
-Host gitee_suneo
-    HostName gitee.com
-    User git
-    IdentityFile ~/.ssh/id_rsa_gitee_suneo
-    IdentitiesOnly yes
-
-Host github_suneo
+# ====================================
+# Work Identity (Alias)
+# ====================================
+Host github-work
     HostName github.com
     User git
-    IdentityFile ~/.ssh/id_rsa_github_suneo
+    IdentityFile ~/.ssh/id_work
+    IdentitiesOnly yes
+
+Host gitee-work
+    HostName gitee.com
+    User git
+    IdentityFile ~/.ssh/id_work
     IdentitiesOnly yes
