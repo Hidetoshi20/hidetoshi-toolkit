@@ -31,27 +31,45 @@ mv ~/.local/bin/mihoro ~/bin/mihoro
 ```
 
 ### 3. 初始化与订阅配置
-由于原始订阅通常是 base64 格式的 VMess 列表，而 `mihoro` 需要 Clash YAML 格式，必须使用 **Subconverter** 进行转换。
 
 编辑 `~/.config/mihoro.toml`：
 ```toml
-# 转换后的 Clash 订阅链接 (示例使用 api.v1.mk)
-remote_config_url = 'https://api.v1.mk/sub?target=clash&url=你的编码后订阅链接'
-mihomo_channel = 'stable'
-mihomo_binary_path = '/home/hidetoshi/bin/mihomo'
-mihomo_config_root = '/home/hidetoshi/.config/mihomo'
-user_systemd_root = '/home/hidetoshi/.config/systemd/user'
-mihoro_user_agent = 'mihoro'
-auto_update_interval = 12
+remote_config_url = 'https://sub.xeton.dev/sub?target=clash&url=你的订阅'
+mihomo_binary_path = '/home/willa/bin/mihomo'
+# ... 其他基础配置
 
 [mihomo_config]
-# 代理端口配置
 mixed_port = 7890
-external_controller = '0.0.0.0:9090'
-# 建议开启 TUN 模式以实现透明代理
-# [mihoro]
-# tun = true
+external_controller = "0.0.0.0:9090"
+
+# 推荐：使用层级化配置注入 TUN (mihoro 0.10.0+)
+[mihomo_config.tun]
+enable = true
+stack = "system"
+auto-route = true
+auto-detect-interface = true
+
+[mihomo_config.dns]
+enable = true
+ipv6 = false
+enhanced-mode = "fake-ip"
+listen = "0.0.0.0:1053"
 ```
+
+#### ⚠️ 重要：权限配置 (TUN 模式必需)
+由于 `mihomo` 运行在用户态，开启 TUN 需要授予二进制文件网络管理权限：
+```bash
+sudo setcap "cap_net_admin,cap_net_raw=+ep" ~/bin/mihomo
+```
+如果不执行此步，`utun` 网卡将无法创建。
+
+#### 🛠 故障排查：配置未生效
+如果 `mihoro update` 后 `config.yaml` 头部没有出现 `tun:` 字段，可以使用以下命令强制注入：
+```bash
+sed -i "1i tun:\n  enable: true\n  stack: system\n  auto-route: true\n  auto-detect-interface: true" ~/.config/mihomo/config.yaml
+systemctl --user restart mihomo
+```
+
 
 运行应用并启动：
 ```bash
