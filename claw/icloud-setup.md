@@ -36,6 +36,13 @@ Each collection (Reminder List or Calendar) is stored in a UUID-named subfolder 
 - **Discover New Lists**: `vdirsyncer discover`
 - **Check Status**: `vdirsyncer metasync`
 
-## 5. Automated Jobs
-- **Status Check**: Every 20 mins (08:00-23:59), the agent runs `vdirsyncer sync` to stay updated.
-- **Daily Briefing**: At 08:00 AM, the agent reads these local files to summarize the day.
+## 6. Known Limitation: Reminders Upgrade
+Apple's "Modern Reminders" architecture (post-iOS 13) uses CloudKit and is **not compatible** with CalDAV/vdirsyncer.
+- **Symptom**: `vdirsyncer` only shows two items: "The creator has upgraded these reminders" and "Where can I find my reminders?".
+- **Status**: CalDAV sync for Reminders is disabled.
+
+## 7. Advanced Sync: pyicloud (Working)
+To bypass Apple's lockout, we use the `pyicloud` Python library to simulate a web login.
+- **Script**: `~/.openclaw/workspace/icloud_reminders.py`
+- **Requires**: Real Apple ID Password + 2FA (one-time).
+- **Update Logic**: The agent runs this script to fetch real-time tasks.
