@@ -2,7 +2,8 @@
 # Personal Identity (Default)
 # ====================================
 Host github.com
-    HostName github.com
+    HostName ssh.github.com
+    Port 443
     User git
     IdentityFile ~/.ssh/id_personal
     IdentitiesOnly yes
@@ -17,7 +18,8 @@ Host gitee.com
 # Work Identity (Alias)
 # ====================================
 Host github-work
-    HostName github.com
+    HostName ssh.github.com
+    Port 443
     User git
     IdentityFile ~/.ssh/id_work
     IdentitiesOnly yes
